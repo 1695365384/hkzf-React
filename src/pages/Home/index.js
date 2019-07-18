@@ -6,7 +6,7 @@ export default class Home extends React.Component {
     return (
       <div>
         主页
-        <Button type="primary" style={{width: 50}}>安妮</Button>
+        <Button type="primary">登录</Button>
       </div>
     );
   }
