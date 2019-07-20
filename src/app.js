@@ -7,8 +7,8 @@ const App = () => {
     <Router>
       <Suspense fallback={<div className="router-loading">LOADING</div>}>
         <div id="app">
-          <Route path="/" render={() => <Redirect to="/Home" />} />
-          <Route path="/Home" component={Home} />
+          <Route path="/" render={() => <Redirect to="/home" />} />
+          <Route path="/home" component={Home} />
         </div>
       </Suspense>
     </Router>
