@@ -2,10 +2,14 @@ import React from 'react'
 import {Carousel} from 'antd-mobile'
 import {API, BASE_URL} from '../../utils/API'
 
+import '../../assets/fonts/iconfont.css'
+import SearchHeader from './../../component/searchHeader/index'
+
 export default class Banner extends React.Component {
   state = {
     data: [],
     imgHeight: 176,
+    name: '上海',
   }
 
   componentDidMount() {
@@ -38,11 +42,17 @@ export default class Banner extends React.Component {
       </a>
     ))
   }
+
+  cityList = () => {}
+
   render() {
     return (
-      <Carousel autoplay={true} infinite>
-        {this.renderContent()}
-      </Carousel>
+      <div>
+        <SearchHeader cityName={this.state.name} />
+        <Carousel autoplay={true} infinite>
+          {this.renderContent()}
+        </Carousel>
+      </div>
     )
   }
 }

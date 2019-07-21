@@ -14,7 +14,7 @@ export default class News extends React.Component {
   }
   render() {
     return (
-      <WingBlank size="lg" className="clearfix">
+      <WingBlank size="lg" className="clearfix NewBox">
         <h3>最新资讯</h3>
 
         <ul className="NewList">
@@ -22,12 +22,17 @@ export default class News extends React.Component {
             return (
               <li key={item.id}>
                 <div className="imgWarp">
-                  <img src={Item.imgSrc} alt="" />
+                  <img src={BASE_URL + item.imgSrc} alt="" />
                 </div>
-                <Flex>
-                  <h3>{item.title} </h3>
-                  <Flex>asdf</Flex>
-                </Flex>
+                <div>
+                  <Flex direction="column" justify="between" className="item">
+                    <h3>{item.title} </h3>
+                    <Flex justify="between" className="info">
+                      <span>{item.from}</span>
+                      <span>{item.date}</span>
+                    </Flex>
+                  </Flex>
+                </div>
               </li>
             )
           })}
