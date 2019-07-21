@@ -1,11 +1,14 @@
-import React from 'react';
+import React from 'react'
+import {AutoSizer, List} from 'react-virtualized'
 
 export default class CityList extends React.Component {
-  render () {
+  render() {
     return (
-      <div>
-        这是城市列表
+      <div className="CityList">
+        <div className="city_header">头部</div>
+        <div className="city_content">内容</div>
+        <div className="city_aside">侧边</div>
       </div>
-    );
+    )
   }
 }

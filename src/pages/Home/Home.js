@@ -6,7 +6,6 @@ import '../../assets/fonts/iconfont.css'
 import './index.scss'
 
 const Index = lazy(() => import('../Index/Index.js'))
-const CItyList = lazy(() => import('../CityList/index.js'))
 const TOP_BAR_LIST = [
   {
     title: '首页',
@@ -59,7 +58,7 @@ export default class HomeRouter extends React.Component {
     return (
       <div className="Homes">
         <Route exact path="/home" component={Index} />
-        <Route path="/home/list" component={CItyList} />
+        <Route path="/home/list" />
         <div className="tabBarList">
           <TabBar tintColor="#21B97A" noRenderContent={true}>
             {this.showTabNavBar()}
