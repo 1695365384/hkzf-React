@@ -1,7 +1,6 @@
 import React from 'react'
 import {WingBlank, Flex} from 'antd-mobile'
 import {API, BASE_URL} from '../../utils/API'
-import Item from 'antd-mobile/lib/popover/Item'
 export default class News extends React.Component {
   state = {
     data: [],

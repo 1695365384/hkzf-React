@@ -1,6 +1,6 @@
-import React, {lazy, Suspense} from 'react'
+import React, {lazy} from 'react'
 import {TabBar} from 'antd-mobile'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {Route} from 'react-router-dom'
 
 import '../../assets/fonts/iconfont.css'
 import './index.scss'
