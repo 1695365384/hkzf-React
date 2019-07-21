@@ -2,12 +2,11 @@ html,body,#root, #app {
   background-color: #fff;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   height: 100%;
-  width: 100%;
 }
 
 * {
   box-sizing: border-box;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 li {
