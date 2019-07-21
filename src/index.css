@@ -1,8 +1,30 @@
-html,body {
+html,body,#root, #app {
   background-color: #fff;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  height: 100%;
+  width: 100%;
 }
 
 * {
   box-sizing: border-box;
+  touch-action: none;
+}
+
+li {
+  list-style:none;
+}
+
+p,ul,ol,div,h4 {
+  padding: 0;
+  margin: 0;
+}
+
+.clearfix::after ,
+.clearfix::before {
+  display: table-cell;
+  content: ""
+}
+
+.clearfix::after {
+  clear: both;
 }

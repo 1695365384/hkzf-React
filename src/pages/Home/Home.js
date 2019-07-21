@@ -57,7 +57,7 @@ export default class HomeRouter extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="Homes">
         <Route exact path="/home" component={Index} />
         <Route path="/home/list" component={CItyList} />
         <div className="tabBarList">

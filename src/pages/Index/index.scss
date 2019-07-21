@@ -1,0 +1,94 @@
+.NavItem {
+  padding: 10px 0;
+  text-align: center; 
+  p {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  img {
+   width: 48px;
+  }
+}
+
+
+.Group {
+  padding: 10px 10px;
+  background-color: #f6f5f6;
+  .Group-title{
+    position: relative;
+    margin: 15px 0px 15px 10px;
+    font-size: 15px;
+    .more {
+      color: #787d82;
+      position: absolute;
+      right: 0;
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+
+
+  .Group-content {
+    display: flex;
+    justify-content:space-around;
+    height: 75px;
+    img {
+      width: 55px;
+      height: 55px;
+      float: right;
+    }
+    .desc {
+      background-color: #fff;
+      p {
+        font-weight: 700;
+        font-size: 13px;
+      }
+
+      span {
+        font-size: 12px;
+        color: #999;
+      }
+    }
+  }
+}
+
+  .am-grid .am-flexbox {
+    background-color: inherit;
+
+    .am-flexbox-item .am-grid-item-content {
+      padding: 0;
+    }
+  }
+
+  .group-item {
+    height: 75px;
+
+    .desc {
+      .title {
+        font-weight: bold;
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+      .info {
+        font-size: 12px;
+        color: #999;
+      }
+    }
+    img {
+      width: 55px;
+    }
+  }
+
+  .am-flexbox-align-stretch {
+    margin-bottom: 10px;
+
+    .am-grid-item {
+      background-color: #fff;
+
+      &:first-child {
+        margin-right: 10px;
+      }
+    }
+  }
+
