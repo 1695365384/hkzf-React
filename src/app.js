@@ -1,8 +1,9 @@
-import React, {Suspense, lazy} from 'react'
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
-import home from './pages/Home/Home'
+import React, {Suspense, lazy} from 'react';
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import home from './pages/Home/Home';
 
-const CItyList = lazy(() => import('./pages/CityList/index.js'))
+const CItyList = lazy(() => import('./pages/CityList/index.js'));
+const map = lazy(() => import('./pages/map/index.js'));
 
 const App = () => {
   return (
@@ -12,10 +13,11 @@ const App = () => {
           <Route exact path="/" render={() => <Redirect to="/home" />} />
           <Route path="/home" component={home} />
           <Route path="/city" component={CItyList} />
+          <Route path="/map" component={map} />
         </div>
       </Suspense>
     </Router>
-  )
-}
+  );
+};
 
-export default App
+export default App;

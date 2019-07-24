@@ -1,9 +1,9 @@
-import React from 'react'
-import {Flex} from 'antd-mobile'
-import {withRouter} from 'react-router-dom'
-import propType from 'prop-types'
+import React from 'react';
+import {Flex} from 'antd-mobile';
+import {withRouter} from 'react-router-dom';
+import propType from 'prop-types';
 
-import './index.scss'
+import './index.scss';
 
 function SearchHeader({cityName, history, className}) {
   return (
@@ -20,12 +20,12 @@ function SearchHeader({cityName, history, className}) {
         </div>
       </Flex>
 
-      <i className="iconfont icon-map" />
+      <i className="iconfont icon-map" onClick={() => history.push('/map')} />
     </Flex>
-  )
+  );
 }
 SearchHeader.propType = {
   cityName: propType.string,
   className: propType.string,
-}
-export default withRouter(SearchHeader)
+};
+export default withRouter(SearchHeader);
