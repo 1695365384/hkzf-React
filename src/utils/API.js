@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axios from 'axios';
 // import {getToken, removeToken} from './auth'
-const BASE_URL = 'http://localhost:8080'
-const API = axios.create({
+const BASE_URL = 'http://localhost:8080';
+const API = axios.create ({
   baseURL: BASE_URL,
-})
+});
 
 // API.interceptors.request.use(config => {
 //   const {url} = config
@@ -25,4 +25,4 @@ const API = axios.create({
 //   return config
 // })
 
-export {API, BASE_URL}
+export {API, BASE_URL};
