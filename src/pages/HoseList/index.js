@@ -1,12 +1,15 @@
 import React from 'react'
-import {SearchHeader} from '../../component'
 import {Flex} from 'antd-mobile'
 import './index.scss'
 import {headerStyle} from './staticData'
-
+import {withRouter} from 'react-router-dom'
+import SearchHeader from './../../component/SearchHeader'
 import Stick from './component/Stick'
-import Content from './content'
+import Content from './Content'
 import Filter from './Filter'
+
+SearchHeader = withRouter(SearchHeader)
+
 export default class HoseList extends React.Component {
 	render() {
 		return (

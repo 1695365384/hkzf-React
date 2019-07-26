@@ -86,7 +86,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://api.map.baidu.com/location/ip",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
