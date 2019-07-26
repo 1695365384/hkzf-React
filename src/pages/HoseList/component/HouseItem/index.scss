@@ -1,0 +1,79 @@
+.houseItem {
+  margin: 10px 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+  .imgWarp {
+    box-sizing: border-box;
+    float: left;
+    img {
+      height: 80px;
+      width: 106px;
+    }
+  }
+  
+
+
+  .desc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+    font-size: 12px;
+    color: #afb2b3;
+    margin: 4px 0;
+  }
+
+  .content {
+    padding-left: 15px;
+    overflow: hidden;
+    height: 100%;
+    .title {
+      h3 {
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    .tags {
+      height: 15px;
+      margin:  4px 0;
+      span {
+        background: #e1f5f8;
+        padding: 3px;
+        margin-right:5px;
+        &.tags1 {
+          color: #39becd;
+        }
+  
+        &.tags2 {
+          color: #3fc28c;
+        }
+  
+        &.tags3 {
+          color: #5aabfd;
+        }
+
+        &.tags4 {
+          color: red;
+        }
+      }
+      
+      
+    }
+
+    .price {
+      margin: 8px 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fa5741;
+      span {
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+    
+  }
+  
+}

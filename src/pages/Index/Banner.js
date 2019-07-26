@@ -1,36 +1,19 @@
 import React from 'react';
 import {Carousel} from 'antd-mobile';
 import {API, BASE_URL} from '../../utils/API';
-import {getCItyName, isCityName} from '../../utils/auth';
 
 import '../../assets/fonts/iconfont.css';
-import SearchHeader from './../../component/searchHeader/index';
+import {SearchHeader} from '../../component';
 
 export default class Banner extends React.Component {
   state = {
     data: [],
     imgHeight: 176,
-    name: '上海',
   };
 
   componentDidMount () {
     this.getImg ();
-    this.setCItyNameAndLocal ();
   }
-
-  setCItyNameAndLocal = () => {
-    let {label} = getCItyName ();
-    let flag = isCityName (label);
-
-    //进入首页先进行localstorege的判断,如果是false 进行请求,否则不请求
-    if (!flag) {
-      return;
-    } else {
-      this.setState ({
-        name: label,
-      });
-    }
-  };
 
   async getImg () {
     let res = await API.get ('/home/swiper');

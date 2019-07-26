@@ -1,40 +1,18 @@
-import React, {lazy} from 'react'
-import {TabBar} from 'antd-mobile'
-import {Route} from 'react-router-dom'
+import React from 'react';
+import {TabBar} from 'antd-mobile';
+import {Route} from 'react-router-dom';
+import {TOP_BAR_LIST} from './HomeData';
+import '../../assets/fonts/iconfont.css';
+import './index.scss';
+import {Index, HoseList} from '../../RouterLink/router';
 
-import '../../assets/fonts/iconfont.css'
-import './index.scss'
-
-const Index = lazy(() => import('../Index/Index.js'))
-const TOP_BAR_LIST = [
-  {
-    title: '首页',
-    icon: 'icon-ind',
-    path: '/home',
-  },
-  {
-    title: '找房',
-    icon: 'icon-findHouse',
-    path: '/home/list',
-  },
-  {
-    title: '资讯',
-    icon: 'icon-infom',
-    path: '/home/news',
-  },
-  {
-    title: '我的',
-    icon: 'icon-my',
-    path: '/home/profile',
-  },
-]
 export default class HomeRouter extends React.Component {
   state = {
     selectedTab: this.props.location.pathname,
-  }
+  };
 
   showTabNavBar = () => {
-    return TOP_BAR_LIST.map(item => {
+    return TOP_BAR_LIST.map (item => {
       return (
         <TabBar.Item
           title={item.title}
@@ -43,28 +21,28 @@ export default class HomeRouter extends React.Component {
           selectedIcon={<i className={`iconfont ${item.icon}`} />}
           selected={this.state.selectedTab === item.path}
           onPress={() => {
-            this.props.history.push(item.path)
-            this.setState({
+            this.props.history.push (item.path);
+            this.setState ({
               selectedTab: item.path,
-            })
+            });
           }}
           data-seed="logId"
         />
-      )
-    })
-  }
+      );
+    });
+  };
 
-  render() {
+  render () {
     return (
       <div className="Homes">
         <Route exact path="/home" component={Index} />
-        <Route path="/home/list" />
+        <Route path="/home/list" component={HoseList} />
         <div className="tabBarList">
           <TabBar tintColor="#21B97A" noRenderContent={true}>
-            {this.showTabNavBar()}
+            {this.showTabNavBar ()}
           </TabBar>
         </div>
       </div>
-    )
+    );
   }
 }
