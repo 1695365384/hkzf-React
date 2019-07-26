@@ -4,7 +4,6 @@ import {API, BASE_URL} from '../../utils/API'
 
 import '../../assets/fonts/iconfont.css'
 import SearchHeader from '../../component/SearchHeader'
-
 export default class Banner extends React.Component {
 	state = {
 		data: [],

@@ -2,25 +2,22 @@ import React from 'react'
 import {Flex} from 'antd-mobile'
 
 import propType from 'prop-types'
-import {getCItyName} from '../../utils/auth'
-
+import {getCurrentCity} from '../../utils'
 import './index.scss'
-
+import {withRouter} from 'react-router-dom'
 class SearchHeader extends React.Component {
 	state = {
 		name: '上海',
 	}
 
-	componentDidMount() {
-		this.setCItyNameAndLocal()
-	}
-
-	setCItyNameAndLocal = () => {
-		let {label} = getCItyName()
+	async componentDidMount() {
+		// this.setCItyNameAndLocal()
+		let {label} = await getCurrentCity()
 		this.setState({
 			name: label,
 		})
 	}
+
 	render() {
 		return (
 			<Flex
@@ -52,5 +49,5 @@ SearchHeader.propType = {
 	cityName: propType.string,
 	className: propType.string,
 }
-
+SearchHeader = withRouter(SearchHeader)
 export default SearchHeader
