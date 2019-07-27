@@ -1,32 +1,41 @@
-import {getCurrentCity} from '../../utils'
 import axios from 'axios'
 import styles from './index.module.css'
 
-//地图控件的位置,在local里面
 let BMap = window.BMap
 
-let top_left_control = new BMap.ScaleControl({
-	anchor: window.BMAP_ANCHOR_TOP_LEFT,
-})
+let {label, value} = JSON.parse(localStorage.getItem('hkzf_city'))
 
-let top_right_navigation = new BMap.NavigationControl({
-	anchor: window.BMAP_ANCHOR_TOP_RIGHT,
-	type: window.BMAP_NAVIGATION_CONTROL_SMALL,
-})
+class CityMap {
+	constructor(container) {
+		this.map = new BMap.Map(container)
+		this.cityName = label
+		this.cityId = value
+		this.startZoom = 11
+		this.listData = []
+		this._initMap = _initMap.bind(this)
+		this._initMap()
+	}
+}
 
-async function _initMap(container) {
-	//渲染地图
-	let map = new BMap.Map(container)
-	var point = new BMap.Point(116.404, 39.915)
-	map.centerAndZoom(point, 11)
+function _initMap() {
+	//初始化地图数据
+	const myGeo = new BMap.Geocoder()
 
-	// 创建点坐标
-	let {label} = await getCurrentCity()
-	map.centerAndZoom(label, 11)
+	myGeo.getPoint(
+		this.cityName,
+		point => {
+			if (point) {
+				//  初始化地图
+				this.map.centerAndZoom(point, this.startZoom)
+				// 添加常用控件
+				this.map.addControl(new BMap.NavigationControl())
+				this.map.addControl(new BMap.ScaleControl())
+			}
+		},
+		this.cityName,
+	)
 
-	map.addControl(top_left_control)
-	map.addControl(top_right_navigation)
-	addMask(map)
+	addMask(this, this.map, this.cityId)
 }
 
 //遮盖物的样式
@@ -39,11 +48,23 @@ const MaskStyle = {
 	color: 'rgb(255, 255, 255)',
 	textAlign: 'center',
 }
-async function addMask(map) {
+function getMaskList(id) {
+	return new Promise(async resolve => {
+		let res = await axios.get('http://localhost:8080/area/map', {
+			params: {
+				id: id,
+			},
+		})
+		resolve(res.data.body)
+	})
+}
+
+async function addMask(mapObj, map, id) {
 	/**
 	 * 遍历列表数据
 	 */
-	let list = await getMaskList()
+	let list = await getMaskList(id)
+
 	list.forEach(item => {
 		let {latitude, longitude} = item.coord
 		let position = new BMap.Point(longitude, latitude)
@@ -51,26 +72,57 @@ async function addMask(map) {
 			position,
 			offset: new BMap.Size(30, -30), //设置文本偏移量
 		}
+		// 创建文本标注对象
 		let label = new BMap.Label(
 			`<div class="${styles.bubble}" >
         <h3 class="${styles.name}">${item.label}</h3>
         <p> ${item.count}套</p>
       </div>`,
 			opts,
-		) // 创建文本标注对象
+		)
+
+		label.addEventListener('click', () => {
+			let {label, value} = item
+
+			mapObj.startZoom = changeStartZoom(mapObj.startZoom)
+			mapObj.cityName = label
+			mapObj.cityId = value
+
+			if (mapObj.startZoom <= 16) {
+				mapObj._initMap()
+			} else {
+				let {value} = item
+				getListData(value, res => {
+					mapObj.listData = res
+				})
+			}
+		})
+
 		label.setStyle(MaskStyle)
 		map.addOverlay(label)
 	})
 }
 
-async function getMaskList() {
-	let {value} = await getCurrentCity()
-	let res = await axios.get('http://localhost:8080/area/map', {
-		params: {
-			id: value,
-		},
-	})
-	return res.data.body
+function changeStartZoom(startZoom) {
+	if (startZoom >= 11 && startZoom <= 12) {
+		return 13
+	} else if (startZoom > 12 && startZoom <= 15) {
+		return 16
+	} else {
+		return
+	}
 }
 
-export {_initMap}
+function getListData(id, callback) {
+	axios
+		.get('http://localhost:8080/houses', {
+			params: {
+				cityId: id,
+			},
+		})
+		.then(res => {
+			return callback(res.data.body.list)
+		})
+}
+
+export {CityMap}

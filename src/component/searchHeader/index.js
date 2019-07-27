@@ -12,10 +12,17 @@ class SearchHeader extends React.Component {
 
 	async componentDidMount() {
 		// this.setCItyNameAndLocal()
-		let {label} = await getCurrentCity()
-		this.setState({
-			name: label,
-		})
+		let {label} = JSON.parse(localStorage.getItem('hkzf_city'))
+		if (label) {
+			this.setState({
+				name: label,
+			})
+		} else {
+			let {label} = getCurrentCity()
+			this.setState({
+				name: label,
+			})
+		}
 	}
 
 	render() {
