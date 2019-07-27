@@ -1,10 +1,13 @@
 import React, {Suspense} from 'react'
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
 import {Home, CItyList, map} from './RouterLink/router'
+import {Toast} from 'antd-mobile'
+
 const App = () => {
 	return (
 		<Router>
-			<Suspense fallback={<div className="router-loading">LOADING</div>}>
+			<Suspense
+				fallback={<div>{Toast.loading('加载中...', 2, null, true)}</div>}>
 				<div id="app">
 					<Route exact path="/" render={() => <Redirect to="/home" />} />
 					<Route path="/home" component={Home} />

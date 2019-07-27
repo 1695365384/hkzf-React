@@ -5,3 +5,16 @@
   box-sizing: border-box;
 }
 
+
+
+.isShowBottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  transform: translate3d(0 ,330px,0);
+  transition: all 4s;
+  overflow-y: auto;
+}
+

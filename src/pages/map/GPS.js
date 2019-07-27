@@ -13,6 +13,7 @@ class CityMap {
 		this.cityId = value
 		this.startZoom = 11
 		this.listData = []
+		this.isShow = false
 		this._initMap = _initMap.bind(this)
 		this._initMap()
 	}
@@ -94,12 +95,15 @@ async function addMask(mapObj, map, id) {
 			mapObj.cityName = label
 			mapObj.cityId = value
 
-			if (mapObj.startZoom <= 16) {
+			if (mapObj.startZoom < 15) {
 				mapObj._initMap()
-				console.log(mapObj)
 			} else {
 				let {value} = item
-				getListData(value)
+				getListData(value, list => {
+					mapObj.listData = list
+					mapObj.isShow = true
+					defineProperty(mapObj)
+				})
 			}
 		})
 
@@ -112,20 +116,39 @@ async function addMask(mapObj, map, id) {
 function changeStartZoom(startZoom) {
 	if (startZoom >= 11 && startZoom <= 12) {
 		return 13
-	} else if (startZoom > 12 && startZoom <= 15) {
-		return 16
+	} else if (startZoom > 12 && startZoom <= 14) {
+		return 15
 	} else {
-		return
+		return 17
 	}
 }
 
-async function getListData(id) {
+async function getListData(id, callback) {
 	let res = await axios.get('http://localhost:8080/houses', {
 		params: {
 			cityId: id,
 		},
 	})
-	return await res.data.body
+	return callback(res.data.body.list)
+}
+function defineProperty(obj, getCurrentHose) {
+	Object.keys(obj).forEach(item => {
+		ObjectDefinePer(obj, item, obj[item], getCurrentHose)
+	})
+
+	function ObjectDefinePer(obj, key, value, getCurrentHose) {
+		Object.defineProperty(obj, key, {
+			enumerable: true,
+			configurable: true,
+			get() {
+				return value
+			},
+			set(newVal) {
+				value = newVal
+				getCurrentHose && getCurrentHose(obj)
+			},
+		})
+	}
 }
 
-export {CityMap}
+export {CityMap, defineProperty}

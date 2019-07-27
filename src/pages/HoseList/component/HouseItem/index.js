@@ -1,9 +1,12 @@
 import React from 'react'
 import {BASE_URL} from '../../../../utils/API'
 import './index.scss'
-export default class HouseItem extends React.Component {
+import propTypes from 'prop-types'
+class HouseItem extends React.Component {
 	render() {
+		if (this.props.list.length < 1) return ''
 		let {title, price, houseImg, houseCode, desc, tags} = this.props.list
+
 		return (
 			<div className="houseItem" key={houseCode} style={this.props.style}>
 				<div className="imgWarp">
@@ -31,3 +34,9 @@ export default class HouseItem extends React.Component {
 		)
 	}
 }
+
+HouseItem.propTypes = {
+	list: propTypes.object.isRequired,
+}
+
+export default HouseItem
