@@ -2,12 +2,14 @@ html,body,#root, #app {
   background-color: #fff;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   height: 100%;
+  touch-action: none;
 }
 
 * {
   box-sizing: border-box;
-  touch-action: pan-y;
+  touch-action: none;
 }
+
 
 li {
   list-style:none;

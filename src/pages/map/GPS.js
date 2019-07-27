@@ -1,5 +1,6 @@
 import axios from 'axios'
 import styles from './index.module.css'
+import {Toast} from 'antd-mobile'
 
 let BMap = window.BMap
 
@@ -18,6 +19,7 @@ class CityMap {
 }
 
 function _initMap() {
+	Toast.loading('加载中', 0, null, true)
 	//初始化地图数据
 	const myGeo = new BMap.Geocoder()
 
@@ -84,23 +86,27 @@ async function addMask(mapObj, map, id) {
 		label.addEventListener('click', () => {
 			let {label, value} = item
 
+			setTimeout(() => {
+				map.clearOverlays()
+			}, 0)
+
 			mapObj.startZoom = changeStartZoom(mapObj.startZoom)
 			mapObj.cityName = label
 			mapObj.cityId = value
 
 			if (mapObj.startZoom <= 16) {
 				mapObj._initMap()
+				console.log(mapObj)
 			} else {
 				let {value} = item
-				getListData(value, res => {
-					mapObj.listData = res
-				})
+				getListData(value)
 			}
 		})
 
 		label.setStyle(MaskStyle)
 		map.addOverlay(label)
 	})
+	Toast.hide()
 }
 
 function changeStartZoom(startZoom) {
@@ -113,16 +119,13 @@ function changeStartZoom(startZoom) {
 	}
 }
 
-function getListData(id, callback) {
-	axios
-		.get('http://localhost:8080/houses', {
-			params: {
-				cityId: id,
-			},
-		})
-		.then(res => {
-			return callback(res.data.body.list)
-		})
+async function getListData(id) {
+	let res = await axios.get('http://localhost:8080/houses', {
+		params: {
+			cityId: id,
+		},
+	})
+	return await res.data.body
 }
 
 export {CityMap}
