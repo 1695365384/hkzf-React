@@ -7,7 +7,7 @@ html,body,#root, #app {
 
 * {
   box-sizing: border-box;
-  touch-action: none;
+  touch-action: auto;
 }
 
 
@@ -15,7 +15,7 @@ li {
   list-style:none;
 }
 
-p,ul,ol,div,h4,h3 {
+p,ul,ol,div,h4,h3 ,h1{
   padding: 0;
   margin: 0;
 }

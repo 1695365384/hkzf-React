@@ -12,9 +12,11 @@ class CityMap {
 		this.cityName = label
 		this.cityId = value
 		this.startZoom = 11
+		this.status = 'start'
 		this.listData = []
-		this.isShow = false
 		this._initMap = _initMap.bind(this)
+		this.CityMapChange = CityMapChange.bind(this)
+		this.CityMapChange()
 		this._initMap()
 	}
 }
@@ -23,7 +25,6 @@ function _initMap() {
 	Toast.loading('加载中', 0, null, true)
 	//初始化地图数据
 	const myGeo = new BMap.Geocoder()
-
 	myGeo.getPoint(
 		this.cityName,
 		point => {
@@ -85,26 +86,12 @@ async function addMask(mapObj, map, id) {
 		)
 
 		label.addEventListener('click', () => {
-			let {label, value} = item
-
 			setTimeout(() => {
 				map.clearOverlays()
 			}, 0)
-
-			mapObj.startZoom = changeStartZoom(mapObj.startZoom)
-			mapObj.cityName = label
-			mapObj.cityId = value
-
-			if (mapObj.startZoom < 15) {
-				mapObj._initMap()
-			} else {
-				let {value} = item
-				getListData(value, list => {
-					mapObj.listData = list
-					mapObj.isShow = true
-					defineProperty(mapObj)
-				})
-			}
+			mapObj = changeStartZoom(mapObj, item)
+			getListData.call(mapObj)
+			mapObj.status === 'start' ? mapObj._initMap() : getListData.call(mapObj)
 		})
 
 		label.setStyle(MaskStyle)
@@ -113,42 +100,56 @@ async function addMask(mapObj, map, id) {
 	Toast.hide()
 }
 
-function changeStartZoom(startZoom) {
-	if (startZoom >= 11 && startZoom <= 12) {
-		return 13
-	} else if (startZoom > 12 && startZoom <= 14) {
-		return 15
-	} else {
-		return 17
+function changeStartZoom(mapObj, item) {
+	let obj = mapObj
+	let {label, value} = item
+	let {startZoom} = mapObj
+
+	obj.cityName = label
+	obj.cityId = value
+
+	switch (startZoom) {
+		case 11:
+			obj.startZoom = 13
+			break
+		case 13:
+			obj.startZoom = 15
+			break
+		case 15:
+			obj.status = 'stop'
+			break
+		default:
+			obj.startZoom = 11
+			obj.status = 'start'
+			return
 	}
+	return obj
 }
 
-async function getListData(id, callback) {
-	let res = await axios.get('http://localhost:8080/houses', {
-		params: {
-			cityId: id,
+function getListData() {
+	return new Promise(resolve => {
+		axios
+			.get('http://localhost:8080/houses', {params: {cityId: this.cityId}})
+			.then(res => {
+				resolve(res.data.body.list)
+			})
+	}).then(list => {
+		this.listData = list
+	})
+}
+
+function CityMapChange(callback) {
+	Object.defineProperty(this, 'listData', {
+		enumerable: true,
+		configurable: true,
+		get() {
+			return value
+		},
+		set(newVal) {
+			value = newVal
+			return callback && callback(value, this.status)
 		},
 	})
-	return callback(res.data.body.list)
-}
-function defineProperty(obj, getCurrentHose) {
-	Object.keys(obj).forEach(item => {
-		ObjectDefinePer(obj, item, obj[item], getCurrentHose)
-	})
-
-	function ObjectDefinePer(obj, key, value, getCurrentHose) {
-		Object.defineProperty(obj, key, {
-			enumerable: true,
-			configurable: true,
-			get() {
-				return value
-			},
-			set(newVal) {
-				value = newVal
-				getCurrentHose && getCurrentHose(obj)
-			},
-		})
-	}
 }
 
-export {CityMap, defineProperty}
+export {CityMap}
