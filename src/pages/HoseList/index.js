@@ -61,8 +61,8 @@ export default class HoseList extends React.Component {
 		})
 		window.scrollTo(0, 0)
 	}
-
-	updateList = list => {
+  //Content 更新列表数据的回调函数
+ 	updateList = list => {
 		this.setState({
 			list: list,
 		})
