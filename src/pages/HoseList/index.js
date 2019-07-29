@@ -1,11 +1,10 @@
 import React from 'react'
-import {Flex} from 'antd-mobile'
+
+//自己的组件
 import './index.scss'
 import {headerStyle} from './staticData'
-import Stick from './component/Stick'
 import Content from './Content'
-import Filter from './Filter'
-
+import Filter from './component/Filter'
 import SearchHeader from '../../component/SearchHeader'
 
 export default class HoseList extends React.Component {
@@ -13,13 +12,7 @@ export default class HoseList extends React.Component {
 		return (
 			<div>
 				<SearchHeader style={headerStyle} Green />
-				<Stick height={50}>
-					{
-						<Flex className="navSort">
-							<Filter />
-						</Flex>
-					}
-				</Stick>
+				<Filter />
 				<Content />
 			</div>
 		)

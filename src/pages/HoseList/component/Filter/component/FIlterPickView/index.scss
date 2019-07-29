@@ -1,0 +1,20 @@
+.pick_bottom_btn {
+  height: 50px;
+  display: flex;
+  font-size: 16px;
+  width: 100%;
+  text-align: center;
+  line-height: 50px;
+  border: 1px solid #e9e9e9;
+  .pick_bottom_btn_close {
+    width: 125px;
+    background-color: #fff;
+    color: #21b97a;
+  }
+
+  .pick_bottom_btn_confirm {
+    flex: 1;
+    background-color: #21b97a;
+    color: #fff;
+  }
+}
