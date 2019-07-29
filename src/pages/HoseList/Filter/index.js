@@ -10,16 +10,15 @@ export default class Filter extends React.Component {
 	state = {
 		isTabsHide: false,
 	}
-	changeTabs = () => {
-		console.log('j哈哈哈')
+	changeTabs = type => {
+		console.log('type', type)
 	}
 	render() {
 		return (
 			<div className="filters">
 				<FilterTitle list={tabs} changeTabs={this.changeTabs} />
-				<FilterPick />
-				{/** <Tabs tabs={tabs} onTabClick={this.onTabClick} />*/}
-				{this.state.isTabsHide ? <PickerView /> : ''}
+				{/** <FilterPick />*/}
+				{/** <Tabs tabs={tabs} onTabClick={this.onTabClick} /><PickerView prefixCls="filters_pickView" />*/}
 			</div>
 		)
 	}
