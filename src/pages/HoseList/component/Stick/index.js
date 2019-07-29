@@ -22,6 +22,7 @@ class Stick extends React.Component {
 	}
 
 	componentDidMount() {
+		this.scrollHandler()
 		window.addEventListener('scroll', this.scrollHandler)
 	}
 
