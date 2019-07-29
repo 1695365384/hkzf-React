@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
-function FilterPick(props) {
-	return <div>这是筛选栏</div>
+export default class FilterMore extends React.Component {
+	render() {
+		return
+	}
 }
-
-export default FilterPick

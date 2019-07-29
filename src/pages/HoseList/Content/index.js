@@ -1,7 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-import {getCItyName} from '../../../utils/auth'
-import {Toast} from 'antd-mobile'
 import {
 	AutoSizer,
 	InfiniteLoader,
@@ -15,46 +13,8 @@ import NoHouse from '../component/NoHouse'
 import HouseItem from '../component/HouseItem'
 
 export default class Content extends React.Component {
-	state = {
-		list: [],
-		count: 0,
-		isLoading: false,
-	}
-
-	value = ''
-	label = ''
-	async componentDidMount() {
-		let {value, label} = await getCItyName()
-		this.label = label
-		this.value = value
-		this.getHouseList()
-	}
-
-	async getHouseList() {
-		Toast.loading('加载中', 3000, null, true)
-		this.setState({
-			isLoading: true,
-		})
-
-		let res = await axios.get('http://localhost:8080/houses', {
-			params: {
-				cityId: this.value,
-				start: 1,
-				end: 20,
-			},
-		})
-
-		let {list, count} = res.data.body
-		this.setState({
-			list: list,
-			count: count,
-			isLoading: false,
-		})
-		Toast.hide()
-	}
-
 	render() {
-		const {count, isLoading} = this.state
+		const {count, isLoading} = this.props
 
 		if (count === 0 && !isLoading) {
 			return <NoHouse>没有找到房源，请您换个搜索条件吧~</NoHouse>
@@ -93,7 +53,7 @@ export default class Content extends React.Component {
 	}
 
 	isRowLoaded = ({index}) => {
-		return !!this.state.list[index]
+		return !!this.props.list[index]
 	}
 
 	loadMoreRows = ({startIndex, stopIndex}) => {
@@ -107,16 +67,14 @@ export default class Content extends React.Component {
 					},
 				})
 				.then(res => {
-					this.setState({
-						list: [...this.state.list, ...res.data.body.list],
-					})
+					this.props.updateList([...this.props.list, ...res.data.body.list])
 					resolve()
 				})
 		})
 	}
 
 	rowRenderer = ({key, index, style}) => {
-		let house = this.state.list[index]
+		let house = this.props.list[index]
 		if (!house) {
 			return (
 				<div key={key} style={style}>
