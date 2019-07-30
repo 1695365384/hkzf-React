@@ -3,6 +3,7 @@ html,body,#root, #app {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   height: 100%;
   touch-action: auto;
+  color: #333;
 }
 
 * {
@@ -14,7 +15,7 @@ li {
   list-style:none;
 }
 
-p,ul,ol,div,h4,h3 ,h1{
+p,ul,ol,div,h4,h3 ,h1,dd{
   padding: 0;
   margin: 0;
 }

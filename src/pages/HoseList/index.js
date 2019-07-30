@@ -61,17 +61,42 @@ export default class HoseList extends React.Component {
 		})
 		window.scrollTo(0, 0)
 	}
-  //Content 更新列表数据的回调函数
- 	updateList = list => {
+	//Content 更新列表数据的回调函数
+	updateList = list => {
 		this.setState({
 			list: list,
 		})
+	}
+
+	//filter More 多条件筛选
+	filterMoreTags = filterListMore => {
+		Toast.loading('加载中...')
+		let {value} = getCItyName()
+		axios
+			.get('http://localhost:8080/houses', {
+				params: {
+					cityId: value,
+					more: filterListMore,
+				},
+			})
+			.then(res => {
+				let {list, count} = res.data.body
+				this.setState({
+					list: list,
+					count: count,
+					isLoading: false,
+				})
+				Toast.hide()
+			})
 	}
 	render() {
 		return (
 			<div>
 				<SearchHeader style={headerStyle} Green />
-				<Filter getFilterNewData={this.getFilterNewData} />
+				<Filter
+					getFilterNewData={this.getFilterNewData}
+					filterMoreTags={this.filterMoreTags}
+				/>
 				<Content
 					{...this.state}
 					updateList={this.updateList}

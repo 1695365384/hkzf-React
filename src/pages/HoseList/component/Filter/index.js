@@ -4,7 +4,6 @@ import {Spring} from 'react-spring/renderprops'
 import {getCItyName} from '../../../../utils/auth'
 import {tabs, getChangeFilter} from '../../staticData'
 import './index.scss'
-import styles from './index.module.css'
 import FilterPickView from './component/FIlterPickView'
 import FilterTitle from './component/FilterTitle'
 import Stick from '../../component/Stick'
@@ -24,7 +23,7 @@ export default class Filter extends React.Component {
 		isFilterPickShow: false,
 		type: '',
 		isMoreShow: false,
-		FIlterMoreObj: [],
+		FIlterMoreObj: {},
 	}
 
 	getFilterList = type => {
@@ -43,12 +42,9 @@ export default class Filter extends React.Component {
 				this.setState({
 					isMoreShow: true,
 				})
-				let list = []
-				Object.keys(obj).forEach(item => {
-					list.push(obj[item])
-				})
+
 				this.setState({
-					FIlterMoreObj: list,
+					FIlterMoreObj: obj,
 				})
 			}
 
@@ -65,36 +61,48 @@ export default class Filter extends React.Component {
 			}
 		})
 	}
-
+	//筛选模态框的显示隐藏
 	changeFilterShow = show => {
 		this.setState({
 			isFilterPickShow: !show,
+			isMoreShow: !show,
 		})
 	}
 
+	//点击不同选项显示不同的pick组件数据
 	PickChange = val => {
 		let {type} = this.state
 		switchFilterData(type, val, FilterDataObject)
 	}
 
+	//点击确定按钮发送请求更新页面
 	emitRsetFilterData = () => {
 		this.setState({
 			isFilterPickShow: false,
 		})
 		this.props.getFilterNewData(FilterDataObject)
+
 		FilterDataObject = new FilterObj()
 		let {value} = getCItyName()
 		FilterDataObject.cityId = value
 	}
+
+	//更多选项里面的tags 标签点击事件
+	filterMoreTags = filterMore => {
+		this.props.filterMoreTags(filterMore)
+	}
 	render() {
 		return (
-			<div>
+			<>
 				<Stick height={50}>
 					{
 						<div>
 							<Spring
-								from={{opacity: 0.5}}
-								to={{opacity: this.state.isFilterPickShow ? 1 : 0}}>
+								from={{opacity: 0.5, display: 'none'}}
+								to={{
+									opacity: this.state.isFilterPickShow ? 1 : 0,
+									display: this.state.isFilterPickShow ? 'block' : 'none',
+								}}>
 								{props => <div style={props} className="filterMask" />}
 							</Spring>
 
@@ -114,31 +122,31 @@ export default class Filter extends React.Component {
 									changeFilterShow={this.changeFilterShow}
 								/>
 							</div>
-
-							<div className="FilterMore">
-								<Spring
-									from={{display: 'none', opacity: 0}}
-									to={{
-										display: this.state.isMoreShow ? 'block' : 'none',
-										opacity: this.state.isMoreShow ? 1 : 0,
-									}}>
-									{props => (
-										<div
-											style={props}
-											className="FilterMore_mask"
-											onClick={() => this.setState({isMoreShow: false})}
-										/>
-									)}
-								</Spring>
-								<FilterMore
-									FIlterMoreObj={this.state.FIlterMoreObj}
-									isMoreShow={this.state.isMoreShow}
-								/>
-							</div>
 						</div>
 					}
 				</Stick>
-			</div>
+				<Spring
+					from={{display: 'none', opacity: 0}}
+					to={{
+						display: this.state.isMoreShow ? 'block' : 'none',
+						opacity: this.state.isMoreShow ? 1 : 0,
+					}}>
+					{props => (
+						<div
+							style={props}
+							className="FilterMore_mask"
+							onClick={() => this.setState({isMoreShow: false})}
+						/>
+					)}
+				</Spring>
+				<FilterMore
+					FIlterMoreObj={this.state.FIlterMoreObj}
+					isMoreShow={this.state.isMoreShow}
+					changeFilterShow={this.changeFilterShow}
+					filterMoreSpanClick={this.filterMoreSpanClick}
+					filterMoreTags={this.filterMoreTags}
+				/>
+			</>
 		)
 	}
 }
