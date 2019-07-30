@@ -2,13 +2,18 @@ import React from 'react'
 import {BASE_URL} from '../../../../utils/API'
 import './index.scss'
 import propTypes from 'prop-types'
+import {withRouter} from 'react-router-dom'
+
 class HouseItem extends React.Component {
 	render() {
 		if (this.props.list.length < 1) return ''
 		let {title, price, houseImg, houseCode, desc, tags} = this.props.list
-
 		return (
-			<div className="houseItem" key={houseCode} style={this.props.style}>
+			<div
+				className="houseItem"
+				key={houseCode}
+				style={this.props.style}
+				onClick={() => this.props.history.push(`/HouseDetail/${houseCode}`)}>
 				<div className="imgWarp">
 					<img src={BASE_URL + houseImg} alt="" />
 				</div>
@@ -38,5 +43,6 @@ class HouseItem extends React.Component {
 HouseItem.propTypes = {
 	list: propTypes.object.isRequired,
 }
+HouseItem = withRouter(HouseItem)
 
 export default HouseItem

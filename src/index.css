@@ -2,8 +2,8 @@ html,body,#root, #app {
   background-color: #fff;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   height: 100%;
-  touch-action: auto;
   color: #333;
+  touch-action: pan-y;
 }
 
 * {
