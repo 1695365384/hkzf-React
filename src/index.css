@@ -1,14 +1,15 @@
 html,body,#root, #app {
-  background-color: #fff;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   height: 100%;
   color: #333;
   touch-action: pan-y;
+  background-color: #fff;
 }
 
 * {
   box-sizing: border-box;
 }
+
 
 
 li {
