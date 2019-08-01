@@ -1,6 +1,6 @@
 import React, {Suspense} from 'react'
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
-import {Home, CItyList, map, HouseDetail} from './RouterLink/router'
+import {Home, CItyList, map, HouseDetail, Login} from './RouterLink/router'
 import {Toast} from 'antd-mobile'
 
 const App = () => {
@@ -13,6 +13,7 @@ const App = () => {
 					<Route path="/home" component={Home} />
 					<Route path="/city" component={CItyList} />
 					<Route path="/map" component={map} />
+					<Route path="/Login" component={Login} />
 					<Route path="/HouseDetail/:houseCode" component={HouseDetail} />
 				</div>
 			</Suspense>

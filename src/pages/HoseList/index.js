@@ -89,6 +89,13 @@ export default class HoseList extends React.Component {
 				Toast.hide()
 			})
 	}
+
+	componentWillUnmount() {
+		this.filterMoreTags = null
+		this.ListRef = null
+		this.getFilterNewData = null
+		this.getHouseList = null
+	}
 	render() {
 		return (
 			<div>

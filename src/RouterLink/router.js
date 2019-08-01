@@ -6,5 +6,6 @@ const Home = lazy(() => import('../pages/Home/Home.js'))
 const Index = lazy(() => import('../pages/Index/Index'))
 const HoseList = lazy(() => import('../pages/HoseList'))
 const HouseDetail = lazy(() => import('../pages/HouseDetail'))
+const Login = lazy(() => import('../pages/Login'))
 
-export {CItyList, map, Home, Index, HoseList, HouseDetail}
+export {CItyList, map, Home, Index, HoseList, HouseDetail, Login}

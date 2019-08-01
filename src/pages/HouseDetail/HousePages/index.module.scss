@@ -1,0 +1,16 @@
+.HousePages {
+  width: 100%;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.HousePages_item {
+  height: 50px;
+  width: 20%;
+  text-align: center;
+  float: left;
+  span {
+    font-size: 23px;
+    margin: 5px 0;
+  }
+}

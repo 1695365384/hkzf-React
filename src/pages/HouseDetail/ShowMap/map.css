@@ -1,0 +1,10 @@
+.mapArrow {
+  background: url(http://map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png)
+  no-repeat;
+  position: absolute;
+  width: 11px;
+  height: 10px;
+  top: 23px;
+  left: 10px;
+  overflow: hidden;
+}

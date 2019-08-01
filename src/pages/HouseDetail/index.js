@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import {Modal, Toast} from 'antd-mobile'
 
 //样式
 import styles from './index.module.scss'
@@ -12,22 +13,61 @@ import HouseItem from './HouseItem'
 import HouseDetailBtn from './HouseDetailBtn'
 
 //导入公众方法
-import {recommendHouses, BASE_URL} from './config'
+import {recommendHouses, BASE_URL, isLogined, getLoginUser} from './config'
 
 export default class HouseDetail extends React.Component {
 	state = {
 		houseData: {},
-		isFavorite: false,
 	}
 	componentDidMount() {
 		this.getDetail()
 	}
 	async getDetail() {
 		let houseID = this.props.history.location.pathname.split('/')[2]
+		let {
+			data: {body: isFavorite},
+		} = await window.API.get(`http://localhost:8080/user/favorites/${houseID}`)
 		let res = await axios.get(`http://localhost:8080/houses/${houseID}`)
 		this.setState({
 			houseData: res.data.body,
+			isFavorite,
 		})
+	}
+
+	handleFavorite = () => {
+		if (!isLogined()) {
+			Modal.alert('你还没有登录呢', '是否要登录?', [
+				{
+					text: '取消',
+					onPress: () => Toast.fail('未能成功收藏', 1, null),
+					style: 'default',
+				},
+				{text: '确定', onPress: () => this.props.history.push('/Login')},
+			])
+		} else {
+			this.addFavorites()
+		}
+	}
+
+	async addFavorites() {
+		let houseID = this.props.history.location.pathname.split('/')[2]
+		let res
+		if (this.state.isFavorite) {
+			res = await window.API.post(
+				`http://localhost:8080/user/favorites/${houseID}`,
+			)
+		} else {
+			res = await window.API.delete(
+				`http://localhost:8080/user/favorites/${houseID}`,
+			)
+		}
+		let {status} = res.data
+		if (status === 200) {
+			Toast.info(this.state.isFavorite ? '收藏成功' : '取消收藏成功', 1, null)
+			this.setState({
+				isFavorite: !this.state.isFavorite,
+			})
+		}
 	}
 	render() {
 		if (Object.keys(this.state.houseData).length === 0) {
@@ -83,7 +123,10 @@ export default class HouseDetail extends React.Component {
 				</div>
 
 				{/**底部按钮 */}
-				<HouseDetailBtn isFavorite={this.state.isFavorite} />
+				<HouseDetailBtn
+					isFavorite={this.state.isFavorite}
+					handleFavorite={this.handleFavorite}
+				/>
 			</div>
 		)
 	}
