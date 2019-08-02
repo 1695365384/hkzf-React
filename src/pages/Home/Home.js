@@ -4,7 +4,7 @@ import {Route} from 'react-router-dom'
 import {TOP_BAR_LIST} from './HomeData'
 import '../../assets/fonts/iconfont.css'
 import './index.scss'
-import {Index, HoseList} from '../../RouterLink/router'
+import {Index, HoseList, Profile} from '../../RouterLink/router'
 
 export default class HomeRouter extends React.Component {
 	state = {
@@ -36,6 +36,7 @@ export default class HomeRouter extends React.Component {
 			<div className="Homes">
 				<Route exact path="/home" component={Index} />
 				<Route path="/home/list" component={HoseList} />
+				<Route path="/home/profile" component={Profile} />
 				<div className="tabBarList">
 					<TabBar tintColor="#21B97A" noRenderContent={true}>
 						{this.showTabNavBar()}
